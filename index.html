@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alternatives Directory</title>
+  <style>
+    /* Add simple CSS to style your page */
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .item { margin-bottom: 20px; }
+    h3 { margin: 0; }
+    p { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>Payment Processor Alternatives</h1>
+  <div id="data-container"></div>
+
+  <script>
+    async function fetchData() {
+      const spreadsheetId = "2PACX-1vRkaLJt2MeTEagI2UZ4vXbksvRLFxFEjIkj7PoLV6xYBUO3srQjhbINse14sQOwsnzbSISEjo-E-IGE";
+      const apiKey = "AIzaSyCOJVwTe9C9snAH7lXWWuaJhLOd2aipShY";
+      const range = "Sheet1!A:C"; // Adjust to your range if necessary
+
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const rows = data.values;
+
+        // Display data
+        const container = document.getElementById('data-container');
+        rows.slice(1).forEach(row => {
+          const item = document.createElement('div');
+          item.classList.add('item');
+          item.innerHTML = `<h3>${row[0]}</h3><p>${row[1]}</p><a href="${row[2]}" target="_blank">Visit</a>`;
+          container.appendChild(item);
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchData);
+  </script>
+</body>
+</html>
