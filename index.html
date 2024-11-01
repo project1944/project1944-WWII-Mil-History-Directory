@@ -27,7 +27,13 @@
       try {
         const response = await fetch(url);
         const data = await response.json();
+        console.log(data); // Log data to see the structure of the response
         const rows = data.values;
+
+  if (!rows) {
+        throw new Error("No rows returned in the data.");
+      }
+
 
         // Display data
         const container = document.getElementById('data-container');
